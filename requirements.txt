@@ -1,0 +1,18 @@
+# Microsoft Agent Framework
+agent-framework>=1.0.0b1
+
+# ACA Sandboxes (session isolation, like Foundry code interpreter)
+azure-containerapps-sandbox
+
+# Azure identity (managed identity in Container Apps)
+azure-identity>=1.19.0
+
+# Setup script only: create the sandbox group and assign the data-owner role
+azure-mgmt-resource>=23.0.0
+azure-mgmt-authorization>=4.0.0
+
+# Web app
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.9.0
+python-dotenv>=1.0.1
