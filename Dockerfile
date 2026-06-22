@@ -1,4 +1,5 @@
-FROM python:3.13-slim
+# Use Microsoft's Docker Hub mirror to avoid Docker Hub anonymous pull rate limits.
+FROM mcr.microsoft.com/mirror/docker/library/python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \

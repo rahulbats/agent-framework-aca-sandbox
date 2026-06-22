@@ -99,7 +99,16 @@ class SandboxSessionManager:
     def _exec_python(sandbox: Any, code: str) -> str:
         """Run code via a stdin heredoc so arbitrary source is passed safely."""
         command = f"python3 - <<'{_PY_HEREDOC}'\n{code}\n{_PY_HEREDOC}"
-        result = sandbox.exec(command)
+        try:
+            result = sandbox.exec(command)
+        except Exception as exc:  # noqa: BLE001 - surface the real cause to the model
+            logger.exception("Sandbox exec failed")
+            return (
+                "[sandbox error] The code did not finish executing. This is usually a "
+                "timeout from a long-running or blocking command (the sandbox executes "
+                "each command synchronously). Avoid long sleeps or unbounded loops and "
+                f"try again. Details: {type(exc).__name__}: {exc}"
+            )
 
         stdout = (getattr(result, "stdout", "") or "").strip()
         stderr = (getattr(result, "stderr", "") or "").strip()
